@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <cstdlib>
 #include <string>
 #include <iterator>
@@ -22,7 +22,7 @@ int sumRecursive(int** a, int n, int m, int i, int j, int sum)
     {
         return sum + a[i][j];
     }
-    else 
+    else
     {
         sum += a[i][j];
         j++;
@@ -44,7 +44,7 @@ int minIterative(int** a, int n, int m)
         {
             if (a[i][j] < min)
             {
-                min = a[0][0];
+                min = a[i][j];
             }
         }
     }
@@ -64,9 +64,9 @@ int minRecursive(int** a, int n, int m, int i, int j, int min)
             i++;
             j = 0;
         }
-        if (a[0][0] < min)
+        if (a[i][j] < min)
         {
-            min = a[0][0];
+            min = a[i][j];
         }
     }
     return minRecursive(a, n, m, i, j, min);
@@ -78,7 +78,7 @@ int main()
     cout << "Введите размер массива" << endl;
     cin >> n >> m;
     int** a = new int* [n];
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < n; i++)
     {
         a[i] = new int[m];
     }
@@ -99,9 +99,9 @@ int main()
         }
         cout << endl;
     }
-   cout << "Сумма элементов массива итерационно равна: " << sumIterative(a, n, m) << endl;
-   cout << "Сумма элементов массива рекурсивно равна: " << sumRecursive(a, n, m, 0, 0, 0) << endl;
-   cout << "Минимальный элемент в массиве итерационно: " << minIterative(a, n, m) << endl;
-   cout << "Минимальный элемент в массиве рекурсивно: " << minRecursive(a, n, m, 0, 0, 0) << endl;
-   return 0;
+    cout << "Сумма элементов массива итерационно равна: " << sumIterative(a, n, m) << endl;
+    cout << "Сумма элементов массива рекурсивно равна: " << sumRecursive(a, n, m, 0, 0, 0) << endl;
+    cout << "Минимальный элемент в массиве итерационно: " << minIterative(a, n, m) << endl;
+    cout << "Минимальный элемент в массиве рекурсивно: " << minRecursive(a, n, m, 0, 0, 0) << endl;
+    return 0;
 }
