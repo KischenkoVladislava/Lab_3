@@ -1,32 +1,40 @@
-﻿#include <iostream>
+#include <iostream>
 using namespace std;
-int slogenie(int a[3][3], int b[3][3])
+int slogenie(int a[3][3], int b[3][3], int n, int m)
 {
-    int c[3][3];
-    for (int i = 0; i < 3; i++)
+    int** c = new int* [n];
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < 3; j++)
+        c[i] = new int[m];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
         {
             c[i][j] = a[i][j] + b[i][j];
             cout << c[i][j] << " ";
         }
         cout << endl;
     }
-    return c[3][3];
+    return **c;
 }
-int vichitanie(int a[3][3], int b[3][3])
+int vichitanie(int a[3][3], int b[3][3], int n, int m)
 {
-    int c[3][3];
-    for (int i = 0; i < 3; i++)
+    int** c = new int* [n];
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < 3; j++)
+        c[i] = new int[m];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
         {
             c[i][j] = a[i][j] - b[i][j];
             cout << c[i][j] << " ";
         }
         cout << endl;
     }
-    return c[3][3];
+    return **c;
 }
 int srchislo(int a[3][3], int b[3][3])
 {
@@ -53,33 +61,50 @@ int srchislo(int a[3][3], int b[3][3])
 }
 int main()
 {
+    setlocale(LC_ALL, "Russian");
     int a[3][3];
+    cout << "Введите элементы массива 1" << endl;
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
-            a[i][j] = (rand() % (10 - 0 + 1) + 0);
+            cin >> a[i][j];
+        }
+    }
+    cout << "Массив 1:" << endl;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
             cout << a[i][j] << " ";
         }
         cout << endl;
     }
-    cout << "vvv0" << endl;
     int b[3][3];
+    cout << "Введите элементы массива 2" << endl;
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
-            b[i][j] = (rand() % (10 - 0 + 1) + 0);
+            cin >> b[i][j];
+        }
+    }
+    cout << "Массив 2:" << endl;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
             cout << b[i][j] << " ";
         }
         cout << endl;
     }
-    cout << endl;
-    cout << slogenie(a, b);
-    cout << endl;
-    cout << vichitanie(a, b);
-    cout << endl;
+    cout << "Поэлементное сложение:" << endl;
+    cout << slogenie(a, b, 3, 3);
+    cout << "Поэлементное вычитание:" << endl;
+    cout << vichitanie(a, b, 3, 3);
+    cout << "Среднее значение всех элементов входных массивов:" << endl;
     cout << srchislo(a, b);
     return 0;
 }
+  
   
