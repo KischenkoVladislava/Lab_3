@@ -1,63 +1,68 @@
-﻿#include <iostream>
+#include <iostream>
 using namespace std;
-int  Minor(int** a, int** b, int N, int i, int j)
+void Minor(int** a, int N, int row, int col, int** b)
 {
-    int  ai, aj, bi, bj;
-    bi = 0;
-    for (ai = 0; ai < N - 1; ai++)
+    int r = 0;
+    int c = 0;
+    for (int i = 0; i < N - 1; i++)
     {
-        if (ai == i)
+        if (i == row)
         {
-            bi = 1;
+            r = 1;
         }
-        bj = 0;
-        for (aj = 0; aj < N - 1; aj++)
+        c = 0;
+        for (int j = 0; j < N - 1; j++)
         {
-            if (aj == j)
+            if (j == col)
             {
-                bj = 1;
-                b[ai][aj] = a[ai + bi][aj + bj];
+                c = 1;
             }
+            b[i][j] = a[i + r][j + c];
         }
     }
-    return Minor(a, b, N, i, j);
 }
 int Opred(int** a, int N)
 {
-    int j = 0, d = 0;
-    int** b;
-    b = new int* [N];
-    for (int i = 0; i < N; i++)
-    {
-        b[i] = new int[N];
-    }
+    int opr = 0;
+    int st = 1;
     if (N == 1)
     {
         return a[0][0];
     }
-    if (N == 2)
+    else if (N == 2)
     {
-        return (a[0][0] * a[1][1] - (a[0][1] * a[1][0]));
+        return a[0][0] * a[1][1] - a[0][1] * a[1][0];
     }
-    if (N > 2)
+    else
     {
-        for (int i = 0; i < N; i++)
+        int** b = new int* [N - 1];
+        for (int i = 0; i < N - 1; i++)
         {
-            int M = Minor(a, b, N, i, 0);
-
-            d += pow(-1, i) * a[i][0] * Opred(a, N);
-        }   
+            b[i] = new int[N - 1];
+        }
+        for (int j = 0; j < N; j++)
+        {
+            cout << a[0][j];
+            Minor(a, N, 0, j, b);
+            opr += (st * a[0][j] * Opred(b, N - 1));
+            st = -st;
+        }
+        for (int i = 0; i < N - 1; i++)
+        {
+            delete[] b[i];
+        }
+        delete[] b;
     }
-    return d;
+    return opr;
 }
 int main()
 {
     setlocale(LC_ALL, "Russian");
     int N;
-    cout << "Введите " << endl;
+    cout << "Введите размер матрицы N" << endl;
     cin >> N;
     int** a = new int* [N];
-    for (int i = 0; i < N; ++i)
+    for (int i = 0; i < N; i++)
     {
         a[i] = new int[N];
     }
@@ -69,7 +74,7 @@ int main()
             cin >> a[i][j];
         }
     }
-    cout << "Массив" << endl;
+    cout << "Массив:" << endl;
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
@@ -78,6 +83,7 @@ int main()
         }
         cout << endl;
     }
-    cout << "hjdfd" << Opred(a, N);
+    cout << "Определитель матрицы:" << endl << Opred(a, N);
     return 0;
 }
+
